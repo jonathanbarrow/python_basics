@@ -1,13 +1,13 @@
-#Write a function called percentile_50 that takes a list of arbitrary numbers
-#The function will return a dictionary
-#where the keys are strings that describe a the upper and lower 50th percentile (the median) as a range (see below)
-#And the values are lists containing numbers from the input list that fall within the lower(inclusive) or upper(exclusive) percentile described by the key
-
+#Let’s make a function that takes in a list of random numbers (Could be floats or ints) and returns a dictionary which
+# identifies where the numbers appear in terms of quartiles. Assume each quartile mark is includes the lower end of the
+# range and goes up to but does not include the upper end of the range.
 
 def percentile_50(some_lst):
-    d = {'<=0.50': [], '>=0.50': []}
+    d = {'<Q1': [], '>=Q1 and <0.5': [], '>=0.5 and <Q3': [], '>=Q3': []}
     below_median = []
     above_median = []
+    quartile1 = []
+    quartile3 = []
     median = []
     some_lst = sorted(some_lst)
     if len(some_lst) % 2 == 0:
@@ -22,8 +22,29 @@ def percentile_50(some_lst):
             above_median.append(item)
         if item <= median:
             below_median.append(item)
-    d['<=0.50'] += below_median
-    d['>=0.50'] += above_median
+    for item in above_median:
+        if len(above_median) % 2 == 0:
+            middle_val3 = int(len(above_median) / 2)
+            middle_val4 = int(len(above_median) / 2 - 1)
+            quartile3 = ((above_median[middle_val3]) + (above_median[middle_val4])) / 2
+        if len(above_median) % 2 == 1:
+            quartile3 = (above_median[int(len(above_median) / 2 - 0.5)])
+    for item in below_median:
+        if len(below_median) % 2 == 0:
+            middle_val5 = int(len(below_median) / 2)
+            middle_val6 = int(len(below_median) / 2 - 1)
+            quartile1 = ((below_median[middle_val5]) + (below_median[middle_val6])) / 2
+        if len(below_median) % 2 == 1:
+            quartile1 = (below_median[int(len(below_median) / 2 - 0.5)])
+    for item in some_lst:
+        if item < quartile1:
+            d['<Q1'].append(item)
+        if item >= quartile1 and item < median:
+            d['>=Q1 and <0.5'].append(item)
+        if item >= median and item < quartile3:
+            d['>=0.5 and <Q3'].append(item)
+        if item >= quartile3:
+            d['>=Q3'].append(item)
     return d
 
 
