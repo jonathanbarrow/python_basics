@@ -1,2 +1,1 @@
-# python_basics
-Complication of Python Code
+My exploration and experience with Pyhton so far! Hope you enjoy!
