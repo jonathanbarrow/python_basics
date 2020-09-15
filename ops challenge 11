@@ -1,0 +1,14 @@
+def main():
+    """
+    open a file
+    """
+    f=open("challenge11file.csv", "w+")
+
+    for i in range(5):
+        f.write("This is line number %d\r\n" % (i+1))
+
+    f=open("challenge11file.csv")
+
+
+if __name__ == "__main__":
+    main()
